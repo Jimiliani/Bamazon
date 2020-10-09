@@ -15,7 +15,7 @@ class BooksList(View):
     template_name = 'books/books_list.html'
     paginated_by = 2
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         books = Book.objects.prefetch_related('authors').order_by('name').all()
         books = BooksListSerializer(books, many=True).data
         paginator = Paginator(books, self.paginated_by)
@@ -32,7 +32,7 @@ class BookDetail(View):
     """
     template_name = 'books/books_detail.html'
 
-    def get(self, request, pk, *args, **kwargs):
+    def get(self, request, pk):
         book = Book.objects.prefetch_related('authors', 'authors__books').get(pk=pk)
         book = BookDetailSerializer(book).data
         return render(request, self.template_name, {'book': book})
@@ -47,7 +47,7 @@ class AuthorDetail(View):
     template_name = 'books/author_detail.html'
     paginated_by = 2
 
-    def get(self, request, pk, *args, **kwargs):
+    def get(self, request, pk):
         author = Author.objects.prefetch_related('books', 'books__authors').get(pk=pk)
         author = AuthorDetailSerializer(author).data
         return render(request, self.template_name, {'author': author})
