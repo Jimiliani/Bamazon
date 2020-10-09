@@ -14,7 +14,7 @@
                     <h5 class="card-title"><b>{{ book.name }}</b></h5>
                     <p class="card-text"><b>Описание:</b> {{ book.description }}</p>
                     <p class="card-text"><b>Цена:</b> {{ book.price }}₽</p>
-                    <p class="card-text"><b>Длина:</b> {{ book.length }} стр.</p>
+                    <p class="card-text"><b>Количество страниц:</b> {{ book.length }} стр.</p>
                     <p class="card-text"><b>Авторы:</b>
                         {% for author in book.authors %}
                             <a href="{% url 'author-detail' pk=author.id %}">{{ author.last_name }} {{ author.first_name }}</a>

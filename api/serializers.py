@@ -4,7 +4,11 @@ from books.models import Book, Author
 
 
 class AuthorNameSerializer(serializers.ModelSerializer):
-    """ Вывод полного имени автора """
+    """
+
+    Вывод полного имени автора
+
+    """
 
     class Meta:
         model = Author
@@ -12,7 +16,11 @@ class AuthorNameSerializer(serializers.ModelSerializer):
 
 
 class BookNameSerializer(serializers.ModelSerializer):
-    """ Вывод названия книги """
+    """
+
+    Вывод названия книги
+
+    """
 
     class Meta:
         model = Book
@@ -20,7 +28,11 @@ class BookNameSerializer(serializers.ModelSerializer):
 
 
 class AuthorsListSerializer(serializers.ModelSerializer):
-    """ Вывод списка авторов """
+    """
+
+    Вывод списка авторов
+
+    """
     books = BookNameSerializer(many=True, read_only=True)
 
     class Meta:
@@ -29,7 +41,11 @@ class AuthorsListSerializer(serializers.ModelSerializer):
 
 
 class BooksListSerializer(serializers.ModelSerializer):
-    """ Вывод списка книг """
+    """
+
+    Вывод списка книг
+
+    """
     authors = AuthorNameSerializer(many=True, read_only=True)
 
     class Meta:
@@ -38,7 +54,11 @@ class BooksListSerializer(serializers.ModelSerializer):
 
 
 class AuthorDetailSerializer(serializers.ModelSerializer):
-    """ Вывод полной информации об авторе """
+    """
+
+    Вывод полной информации об авторе
+
+    """
     books = BooksListSerializer(many=True, read_only=True)
 
     class Meta:
@@ -47,7 +67,11 @@ class AuthorDetailSerializer(serializers.ModelSerializer):
 
 
 class BookDetailSerializer(serializers.ModelSerializer):
-    """ Вывод полной информации о книге """
+    """
+
+    Вывод полной информации о книге
+
+    """
     authors = AuthorsListSerializer(many=True, read_only=True)
 
     class Meta:
