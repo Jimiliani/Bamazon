@@ -1,17 +1,23 @@
 from django.core.paginator import Paginator
+from django.db.models import F
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
+from api.serializers import BooksListSerializer
 from books.models import Book, Author
 
 
 class BooksList(View):
     template_name = 'books/books_list.html'
+    paginated_by = 2
 
     def get(self, request, *args, **kwargs):
         books = Book.objects.all()
-        print(books)
-        return render(request, self.template_name)
+        books = BooksListSerializer(books, many=True).data
+        paginator = Paginator(books, self.paginated_by)
+        page_number = request.GET.get('page')
+        page_of_book = paginator.get_page(page_number)
+        return render(request, self.template_name, {'page': page_of_book})
 
 
 class BookDetail(View):
@@ -25,15 +31,6 @@ class BookDetail(View):
 
 class AuthorDetail(View):
     template_name = 'books/author_detail.html'
-
-    def get(self, request, pk, *args, **kwargs):
-        author = get_object_or_404(Author, pk=pk)
-        print(author)
-        return render(request, self.template_name)
-
-
-class AuthorBooks(View):
-    template_name = 'books/author_books.html'
     paginated_by = 2
 
     def get(self, request, pk, *args, **kwargs):
@@ -42,5 +39,7 @@ class AuthorBooks(View):
         paginator = Paginator(books, self.paginated_by)
         page_number = request.GET.get('page')
         page_of_book = paginator.get_page(page_number)
+        for i in page_of_book:
+            print(i)
         print(page_of_book)
         return render(request, self.template_name)

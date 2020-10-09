@@ -8,7 +8,7 @@ class AuthorNameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Author
-        fields = ['first_name', 'last_name']
+        fields = ['id', 'first_name', 'last_name']
 
 
 class BookNameSerializer(serializers.ModelSerializer):
@@ -16,7 +16,7 @@ class BookNameSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Book
-        fields = ['name', ]
+        fields = ['id', 'name']
 
 
 class AuthorsListSerializer(serializers.ModelSerializer):

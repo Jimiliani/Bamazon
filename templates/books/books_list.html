@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'base.html' %}
+{% block head %}
     <title>Список книг</title>
-</head>
-<body>
-123
-</body>
-</html>
+{% endblock %}
+{% block body %}
+    <br>
+    <div class="card-deck">
+        {% for book in page %}
+            <div class="card mb-3" href="{% url 'book-detail' pk=book.id %}" onclick="changeLocation(this)"
+                 style="max-width: 540px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{ book.image }}" class="card-img" alt="Обложка книги">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title"><b>{{ book.name }}</b></h5>
+                            <p class="card-text"><b>Цена:</b> {{ book.price }}₽</p>
+                            <p class="card-text"><b>Длина:</b> {{ book.length }} стр.</p>
+                            <p class="card-text"><b>Авторы:</b>
+                                {% for author in book.authors %}
+                                    <a href="{% url 'author-detail' pk=author.id %}">{{ author.last_name }} {{ author.first_name }}</a>
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+    </div>
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if page.has_previous %}
+            <a href="?page=1">&laquo; Первая страница</a>
+            <a href="?page={{ page.previous_page_number }}">Назад</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ page.number }} из {{ page.paginator.num_pages }}.
+        </span>
+
+        {% if page.has_next %}
+            <a href="?page={{ page.next_page_number }}">Дальше</a>
+            <a href="?page={{ page.paginator.num_pages }}">Последняя страница &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script>
+        function changeLocation(elem) {
+            console.log($(elem).attr('href'));
+            window.location.href = $(elem).attr('href');
+        }
+    </script>
+{% endblock %}
