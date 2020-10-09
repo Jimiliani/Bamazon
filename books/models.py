@@ -1,15 +1,14 @@
 from django.db import models
 from django.urls import reverse
-from django.utils.datetime_safe import date
 
 
 class Book(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False)
     description = models.TextField()
     price = models.IntegerField(null=False, blank=False)
-    image = models.ImageField(null=True)
+    image = models.ImageField(default='/cover/default.jpg', upload_to='cover/',null=False)
     length = models.IntegerField(null=False, blank=False)
-    pub_date = models.DateField(auto_now_add=True,default=date.today)
+    pub_date = models.DateField(auto_now_add=True)
     authors = models.ManyToManyField('Author', blank=False, related_name='books', verbose_name='Авторы')
 
     def get_absolute_url(self):
