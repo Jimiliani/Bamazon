@@ -20,6 +20,7 @@
                             <p class="card-text"><b>Авторы:</b>
                                 {% for author in book.authors %}
                                     <a href="{% url 'author-detail' pk=author.id %}">{{ author.last_name }} {{ author.first_name }}</a>
+                                    {% if not forloop.last %}, {% endif %}
                                 {% endfor %}
                             </p>
                         </div>

@@ -6,7 +6,7 @@ class Book(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False)
     description = models.TextField()
     price = models.IntegerField(null=False, blank=False)
-    image = models.ImageField(default='/cover/default.jpg', upload_to='cover/', null=False)
+    image = models.ImageField(default='cover/default.jpg', upload_to='cover/', null=False)
     length = models.IntegerField(null=False, blank=False)
     authors = models.ManyToManyField('Author', blank=False, related_name='books', verbose_name='Авторы')
 
@@ -24,7 +24,7 @@ class Book(models.Model):
 class Author(models.Model):
     first_name = models.CharField(max_length=255, null=False, blank=False)
     last_name = models.CharField(max_length=255, null=False, blank=False)
-    image = models.ImageField(default='/authors/default.jpg', upload_to='authors/', null=False)
+    image = models.ImageField(default=' authors/default.jpg', upload_to='authors/', null=False)
     about = models.TextField()
 
     def get_absolute_url(self):

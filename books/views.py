@@ -3,7 +3,7 @@ from django.db.models import F
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 
-from api.serializers import BooksListSerializer
+from api.serializers import BooksListSerializer, AuthorDetailSerializer, BookDetailSerializer
 from books.models import Book, Author
 
 
@@ -24,9 +24,10 @@ class BookDetail(View):
     template_name = 'books/books_detail.html'
 
     def get(self, request, pk, *args, **kwargs):
-        book = get_object_or_404(Book, pk=pk)
+        book = Book.objects.prefetch_related('authors').get(pk=pk)
+        book = BookDetailSerializer(book).data
         print(book)
-        return render(request, self.template_name)
+        return render(request, self.template_name, {'book': book})
 
 
 class AuthorDetail(View):
@@ -34,12 +35,6 @@ class AuthorDetail(View):
     paginated_by = 2
 
     def get(self, request, pk, *args, **kwargs):
-        author = get_object_or_404(Author, pk=pk)
-        books = Book.objects.filter(authors__in=[author]).order_by('name')
-        paginator = Paginator(books, self.paginated_by)
-        page_number = request.GET.get('page')
-        page_of_book = paginator.get_page(page_number)
-        for i in page_of_book:
-            print(i)
-        print(page_of_book)
-        return render(request, self.template_name)
+        author = Author.objects.prefetch_related('books').get(pk=pk)
+        author = AuthorDetailSerializer(author).data
+        return render(request, self.template_name, {'author': author})

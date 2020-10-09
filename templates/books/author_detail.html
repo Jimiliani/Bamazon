@@ -1,7 +1,26 @@
 {% extends 'base.html' %}
 {% block head %}
-    <title>Информация об авторе</title>
+    <title>{{ author.last_name }} {{ author.first_name }}</title>
 {% endblock %}
 {% block body %}
-author detail
+    <br>
+    <div class="card mb-3 mt-5 ml-auto mr-auto" style="max-width: 1080px;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="{{ author.image }}" class="card-img" alt="Изображение профиля">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title"><b>{{ author.last_name }} {{ author.first_name }}</b></h5>
+                    <p class="card-text"><b>Об авторе: </b>{{ author.about }}</p>
+                    <p class="card-text"><b>Выпущенные книги:</b>
+                        {% for book in author.books %}
+                            <a href="{% url 'book-detail' pk=book.id %}">{{ book.name }}</a>{% if not forloop.last %},
+                        {% endif %}
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
