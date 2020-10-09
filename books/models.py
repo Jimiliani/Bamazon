@@ -8,7 +8,6 @@ class Book(models.Model):
     price = models.IntegerField(null=False, blank=False)
     image = models.ImageField(default='/cover/default.jpg', upload_to='cover/',null=False)
     length = models.IntegerField(null=False, blank=False)
-    pub_date = models.DateField(auto_now_add=True)
     authors = models.ManyToManyField('Author', blank=False, related_name='books', verbose_name='Авторы')
 
     def get_absolute_url(self):

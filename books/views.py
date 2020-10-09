@@ -41,10 +41,6 @@ class AuthorBooks(View):
         books = Book.objects.filter(authors__in=[author]).order_by('name')
         paginator = Paginator(books, self.paginated_by)
         page_number = request.GET.get('page')
-        page_of_books = paginator.get_page(page_number)
-        print(page_of_books)
-        print(books)
-        print(paginator)
-        for i in page_of_books:
-            print(i)
+        page_of_book = paginator.get_page(page_number)
+        print(page_of_book)
         return render(request, self.template_name)
