@@ -6,23 +6,35 @@ from books.models import Book, Author
 
 class BooksList(ListAPIView):
     """ Список книг """
-    queryset = Book.objects.all()
     serializer_class = BooksListSerializer
+
+    def get_queryset(self):
+        books = Book.objects.prefetch_related('authors')
+        return books
 
 
 class BookDetail(RetrieveAPIView):
     """ Информация об отдельной книге """
-    queryset = Book.objects.all()
     serializer_class = BookDetailSerializer
+
+    def get_queryset(self):
+        books = Book.objects.prefetch_related('authors', 'authors__books')
+        return books
 
 
 class AuthorsList(ListAPIView):
     """ Список авторов """
-    queryset = Author.objects.all()
     serializer_class = AuthorsListSerializer
+
+    def get_queryset(self):
+        authors = Author.objects.prefetch_related('books')
+        return authors
 
 
 class AuthorDetail(RetrieveAPIView):
     """ Информация об отдельном авторе """
-    queryset = Author.objects.all()
     serializer_class = AuthorDetailSerializer
+
+    def get_queryset(self):
+        authors = Author.objects.prefetch_related('books', 'books__authors')
+        return authors
