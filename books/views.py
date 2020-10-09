@@ -1,6 +1,5 @@
 from django.core.paginator import Paginator
-from django.db.models import F
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.views import View
 
 from api.serializers import BooksListSerializer, AuthorDetailSerializer, BookDetailSerializer
@@ -8,6 +7,11 @@ from books.models import Book, Author
 
 
 class BooksList(View):
+    """
+
+    Список книг
+
+    """
     template_name = 'books/books_list.html'
     paginated_by = 2
 
@@ -21,6 +25,11 @@ class BooksList(View):
 
 
 class BookDetail(View):
+    """
+
+    Информация об отдельной книге
+
+    """
     template_name = 'books/books_detail.html'
 
     def get(self, request, pk, *args, **kwargs):
@@ -30,6 +39,11 @@ class BookDetail(View):
 
 
 class AuthorDetail(View):
+    """
+
+    Информация об отдельном авторе
+
+    """
     template_name = 'books/author_detail.html'
     paginated_by = 2
 

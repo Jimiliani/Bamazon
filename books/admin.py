@@ -7,12 +7,22 @@ admin.site.site_header = 'Книги и авторы'
 
 
 class BookAdmin(admin.ModelAdmin):
+    """
+
+    Кастомизация панели книг в админке
+
+    """
     list_display = ['name', 'price', 'length']
     list_filter = ['name', 'price', 'length']
     filter_horizontal = ['authors', ]
 
 
 class AuthorAdmin(admin.ModelAdmin):
+    """
+
+    Кастомизация панели авторов в админке
+
+    """
     list_display = ['first_name', 'last_name']
     list_filter = ['first_name', 'last_name']
 

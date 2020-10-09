@@ -5,7 +5,11 @@ from books.models import Book, Author
 
 
 class BooksList(ListAPIView):
-    """ Список книг """
+    """
+
+    Список книг
+
+    """
     serializer_class = BooksListSerializer
 
     def get_queryset(self):
@@ -14,7 +18,11 @@ class BooksList(ListAPIView):
 
 
 class BookDetail(RetrieveAPIView):
-    """ Информация об отдельной книге """
+    """
+
+    Информация об отдельной книге
+
+    """
     serializer_class = BookDetailSerializer
 
     def get_queryset(self):
@@ -23,7 +31,11 @@ class BookDetail(RetrieveAPIView):
 
 
 class AuthorsList(ListAPIView):
-    """ Список авторов """
+    """
+
+    Список авторов
+
+    """
     serializer_class = AuthorsListSerializer
 
     def get_queryset(self):
@@ -32,7 +44,11 @@ class AuthorsList(ListAPIView):
 
 
 class AuthorDetail(RetrieveAPIView):
-    """ Информация об отдельном авторе """
+    """
+
+    Информация об отдельном авторе
+
+    """
     serializer_class = AuthorDetailSerializer
 
     def get_queryset(self):
