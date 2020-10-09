@@ -16,7 +16,7 @@ class BooksList(View):
     paginated_by = 2
 
     def get(self, request, *args, **kwargs):
-        books = Book.objects.prefetch_related('authors').all()
+        books = Book.objects.prefetch_related('authors').order_by('name').all()
         books = BooksListSerializer(books, many=True).data
         paginator = Paginator(books, self.paginated_by)
         page_number = request.GET.get('page')
