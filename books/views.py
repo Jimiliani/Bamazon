@@ -38,9 +38,13 @@ class AuthorBooks(View):
 
     def get(self, request, pk, *args, **kwargs):
         author = get_object_or_404(Author, pk=pk)
-        books = author.objects.prefetch_related('books').only('books')
+        books = Book.objects.filter(authors__in=[author]).order_by('name')
         paginator = Paginator(books, self.paginated_by)
         page_number = request.GET.get('page')
         page_of_books = paginator.get_page(page_number)
         print(page_of_books)
+        print(books)
+        print(paginator)
+        for i in page_of_books:
+            print(i)
         return render(request, self.template_name)
