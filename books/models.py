@@ -3,11 +3,12 @@ from django.urls import reverse
 
 
 class Book(models.Model):
-    name = models.CharField(max_length=255, null=False, blank=False)
-    description = models.TextField()
-    price = models.IntegerField(null=False, blank=False)
-    image = models.ImageField(default='cover/default.jpg', upload_to='cover/', null=False)
-    length = models.IntegerField(null=False, blank=False)
+    name = models.CharField(max_length=255, null=False, blank=False, verbose_name='Название')
+    description = models.TextField(verbose_name='Описание')
+    price = models.IntegerField(null=False, blank=False, verbose_name='Цена')
+    image = models.ImageField(default='cover/default.jpg', upload_to='cover/', null=False,
+                              verbose_name='Изображение обложки')
+    length = models.IntegerField(null=False, blank=False, verbose_name='Длина')
     authors = models.ManyToManyField('Author', blank=False, related_name='books', verbose_name='Авторы')
 
     def get_absolute_url(self):
@@ -22,10 +23,11 @@ class Book(models.Model):
 
 
 class Author(models.Model):
-    first_name = models.CharField(max_length=255, null=False, blank=False)
-    last_name = models.CharField(max_length=255, null=False, blank=False)
-    image = models.ImageField(default=' authors/default.jpg', upload_to='authors/', null=False)
-    about = models.TextField()
+    first_name = models.CharField(max_length=255, null=False, blank=False, verbose_name='Имя')
+    last_name = models.CharField(max_length=255, null=False, blank=False, verbose_name='Фамилия')
+    image = models.ImageField(default=' authors/default.jpg', upload_to='authors/', null=False,
+                              verbose_name='Изображение автора')
+    about = models.TextField(verbose_name='Об авторе')
 
     def get_absolute_url(self):
         return reverse('author-detail', kwargs={'pk': self.pk})
